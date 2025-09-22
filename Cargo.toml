@@ -16,9 +16,15 @@ clap_complete = "4.5"
 clap_complete_nushell = "4.5"
 
 # Config
-config = "0.15"
+# Needed until https://github.com/GREsau/schemars/pull/476 is merged
+schemars = { version = "1", git = "https://github.com/artrixdotdev/schemars", features = [
+   "url2",
+   "regex",
+] }
 regex = "1"
-serde = "1"
+config = "0.15"
+
+serde = { version = "1", features = ["derive"] }
 
 # Logging
 tracing = "0.1"
