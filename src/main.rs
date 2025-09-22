@@ -1,0 +1,18 @@
+mod cli;
+mod commands;
+use anyhow::Result;
+use clap::Parser;
+use cli::{Cli, Commands};
+use commands::*;
+
+fn main() -> Result<()> {
+   let cli = Cli::parse();
+
+   match cli.command {
+      Some(Commands::Completions { shell }) => {
+         completions::run(shell)?;
+      }
+      None => todo!(),
+   }
+   Ok(())
+}
