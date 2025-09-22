@@ -12,7 +12,7 @@ fn main() -> Result<()> {
       Some(Commands::Completions { shell }) => {
          completions::run(shell)?;
       }
-      None => todo!(),
+      None => launch::run(cli.url)?,
    }
    Ok(())
 }
