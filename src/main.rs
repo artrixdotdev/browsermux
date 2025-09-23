@@ -1,6 +1,5 @@
 mod cli;
 mod commands;
-use std::fs;
 
 use anyhow::{Context, Result, ensure};
 use clap::Parser;

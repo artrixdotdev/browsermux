@@ -102,11 +102,11 @@ mod serde_regex {
       let s = String::deserialize(deserializer)?;
       Regex::new(&s).map_err(serde::de::Error::custom)
    }
-
+   #[allow(dead_code)]
    pub fn serialize<S>(regex: &Regex, serializer: S) -> Result<S::Ok, S::Error>
    where
       S: serde::Serializer,
    {
-      serializer.serialize_str(&regex.as_str())
+      serializer.serialize_str(regex.as_str())
    }
 }
