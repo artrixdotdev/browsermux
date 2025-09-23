@@ -8,17 +8,24 @@ use commands::*;
 use config::{Config, File as ConfigFile};
 
 use settings::*;
+use tracing::{Level, info, trace};
 mod settings;
 mod util;
 
 fn main() -> Result<()> {
+   tracing_subscriber::fmt()
+      .with_target(true)
+      .with_max_level(Level::TRACE)
+      .pretty()
+      .init();
+
    let cli = Cli::parse();
    let config_path = util::expand_dir(
       cli.config
          .unwrap_or("~/.config/browsermux/config.toml".into()),
    );
 
-   println!("config path: {config_path:?}");
+   trace!("Using config file at {config_path:?}");
 
    ensure!(config_path.exists(), "config file not found");
    let config_path = config_path.to_string_lossy().to_string();
@@ -29,6 +36,8 @@ fn main() -> Result<()> {
       .with_context(|| format!("failed to load config file at {config_path}"))?;
 
    let settings = config.try_deserialize::<Settings>()?;
+
+   info!(config = %settings, "Config loaded");
 
    match cli.command {
       Some(Commands::Completions { shell }) => {

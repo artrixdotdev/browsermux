@@ -1,12 +1,19 @@
 use crate::{BrowserConfig, Settings};
 use anyhow::{Context, Result, ensure};
 use std::process::Command;
+use tracing::{debug, info, trace};
 use url::Url;
 
 pub fn run(settings: Settings, url: Url) -> Result<()> {
    let url = url.to_string();
 
    let browsers = settings.browsers;
+
+   trace!(
+      url,
+      browsers = ?browsers.keys().map(|k| k.as_str()).collect::<Vec<_>>(),
+      "Launching a new browser"
+   );
 
    let matching_browser = settings
       .rules
@@ -22,12 +29,21 @@ pub fn run(settings: Settings, url: Url) -> Result<()> {
 
    let browser = browsers.get(&matching_browser).unwrap(); // Safe unwrap because of above code
 
-   let browser = match browser {
+   debug!(%browser, "Found matching browser");
+
+   let command = match browser {
       BrowserConfig::Simple(path) => Command::new(path).arg(&url).spawn(),
       BrowserConfig::Detailed { path, args } => Command::new(path).args(args).arg(&url).spawn(),
    };
 
-   browser.with_context(|| format!("failed to launch browser for {}", url))?;
+   let process = command.with_context(|| format!("failed to launch browser for {}", url))?;
+
+   info!(
+      url,
+      %browser,
+      process_id = process.id(),
+      "Browser launched"
+   );
 
    Ok(())
 }
