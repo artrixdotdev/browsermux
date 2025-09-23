@@ -47,12 +47,7 @@ impl fmt::Display for Settings {
          )
          .field(
             "rules",
-            &self
-               .rules
-               .iter()
-               .map(|r| r.to_string())
-               .collect::<Vec<_>>()
-               .join(", "),
+            &self.rules.iter().map(|r| r.to_string()).collect::<Vec<_>>(),
          )
          .finish()
    }
