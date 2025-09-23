@@ -13,13 +13,14 @@ mod settings;
 mod util;
 
 fn main() -> Result<()> {
+   let cli = Cli::parse();
+
    tracing_subscriber::fmt()
       .with_target(true)
-      .with_max_level(Level::TRACE)
+      .with_max_level(cli.log_level.unwrap_or(Level::INFO))
       .pretty()
       .init();
 
-   let cli = Cli::parse();
    let config_path = util::expand_dir(
       cli.config
          .unwrap_or("~/.config/browsermux/config.toml".into()),

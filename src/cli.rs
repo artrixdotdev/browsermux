@@ -1,6 +1,7 @@
 use std::path::PathBuf;
 
 use clap::{Parser, Subcommand};
+use tracing::Level;
 use url::Url;
 
 use crate::commands::completions::CompletionShell;
@@ -17,6 +18,9 @@ pub struct Cli {
 
    #[command(subcommand)]
    pub command: Option<Commands>,
+
+   #[arg(long, value_name = "LEVEL", value_enum)]
+   pub log_level: Option<Level>,
 }
 
 #[derive(Subcommand)]
