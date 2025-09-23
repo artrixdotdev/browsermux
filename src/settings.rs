@@ -19,7 +19,7 @@ use std::{collections::HashMap, path::PathBuf};
 /// browser = "brave"
 /// ```
 #[derive(Debug, Deserialize, JsonSchema)]
-pub struct Config {
+pub struct Settings {
    /// The name of the default browser to be used when no rule matches.
    pub default: String,
 
