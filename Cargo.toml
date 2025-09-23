@@ -32,3 +32,13 @@ tracing-subscriber = "0.3"
 
 # URL parsing
 url = "2.5"
+
+
+[build-dependencies]
+schemars = { version = "1", git = "https://github.com/artrixdotdev/schemars", features = [
+   "url2",
+   "regex",
+] }
+regex = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
