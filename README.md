@@ -80,9 +80,6 @@ browser = "chrome" # Always a key in the [browsers] table
 #
 
 ## 🚀 Why Browsermux?
-Whether you're a developer juggling Chrome, Firefox, and a privacy‑hardened browser,
-or someone who just likes keeping work and personal browsing **totally separate** —
-**Browsermux makes managing multiple browsers effortless.**
+I've been an avid firefox user for a bit now, as a developer, I enjoy it. However, as a student, I'm not able to use a lot of the applications my school requires.
+I built this tool to save myself (and hopefully others) the headache of constant browser switching
 
-
-Would you like me to also add example **configuration snippets** (like `.browsermuxrc` with regex rules) so people immediately see how to use it after installing? That could make the README feel even more welcoming.
