@@ -1,9 +1,28 @@
 [package]
 name = "browsermux"
 description = "Route URLs to a specific browser!"
+repository = "https://github.com/artrixdotdev/browsermux"
+homepage = "https://github.com/artrixdotdev/browsermux"
+authors = ["Artrix <sefu786@outlook.com>"]
 license = "MIT"
 version = "0.1.0"
 edition = "2024"
+
+[package.metadata.wix]
+upgrade-guid = "49FDC885-9A9C-4A66-B4B3-EEB96AAA9499"
+path-guid = "D7D3E6E3-A772-4494-96A0-6BF97484C877"
+license = false
+eula = false
+
+[package.metadata.aur]
+package_name = "browsermux"
+source_download = "https://github.com/artrixdotdev/browsermux/releases/download/v{{ version }}/browsermux-{{ version }}-x86_64.tar.gx"
+depends = ["sushi"]
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
 
 
 [dependencies]
