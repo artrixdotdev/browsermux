@@ -159,6 +159,13 @@ fn generate_schema() {
 }
 
 fn main() {
+   let out = out_dir();
+
+   // Ensure the directory exists recursively
+   if let Err(e) = fs::create_dir_all(&out) {
+      eprintln!("Failed to create output directory {:?}: {}", out, e);
+      std::process::exit(1);
+   }
    generate_schema();
    #[cfg(target_os = "linux")]
    #[cfg(target_arch = "x86_64")]
