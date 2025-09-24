@@ -1,3 +1,4 @@
+use std::fs::OpenOptions;
 use std::io::Write;
 use std::os::unix::fs::PermissionsExt;
 use std::{env, fs};
@@ -14,6 +15,15 @@ fn out_dir() -> PathBuf {
 
 fn generate_pkgbuild() {
    let mut pkgbuild = String::new();
+
+   let path = out_dir().join("PKGBUILD");
+
+   let mut file = OpenOptions::new()
+      .write(true)
+      .create(true)
+      .truncate(true)
+      .open(&path)
+      .unwrap();
 
    let maintainers = env!("CARGO_PKG_AUTHORS").split(':').collect::<Vec<_>>();
 
@@ -90,8 +100,7 @@ package() {{
 "#,
    ));
 
-   let path = out_dir().join("PKGBUILD");
-   fs::write(&path, pkgbuild).unwrap();
+   file.write_all(pkgbuild.as_bytes()).unwrap();
 
    println!("cargo:warning=PKGBUILD file is generated at {path:?}");
 }
@@ -101,7 +110,7 @@ fn generate_inject_hash_script() {
    let bin = env!("CARGO_PKG_NAME"); // Binary name, change if necessary
 
    let path = out_dir().join("inject_hash.sh");
-   let mut file = fs::OpenOptions::new()
+   let mut file = OpenOptions::new()
       .write(true)
       .create(true)
       .truncate(true)
@@ -134,11 +143,17 @@ fn generate_inject_hash_script() {
 }
 
 fn generate_schema() {
-   let schema = schemars::schema_for!(Settings);
-   let schema = serde_json::to_string_pretty(&schema).unwrap();
-
    let path = out_dir().join("schema.json");
-   fs::write(&path, schema).unwrap();
+   let mut file = OpenOptions::new()
+      .write(true)
+      .create(true)
+      .truncate(true)
+      .open(&path)
+      .unwrap();
+   let schema = schemars::schema_for!(Settings);
+   let schema = serde_json::to_vec_pretty(&schema).unwrap();
+
+   file.write_all(schema.as_slice()).unwrap();
 
    println!("cargo:warning=schema file is generated at {path:?}");
 }
