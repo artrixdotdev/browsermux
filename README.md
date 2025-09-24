@@ -37,13 +37,14 @@ curl -s https://github.com/artrixdotdev/browsermux/releases/latest/download/brow
 
 
 ### 🪟 Windows
-Head over to the [latest release](https://github.com/artrixdotdev/browsermux/releases/latest) and download the Windows installer (`.msi`).
-
-Or, if you can install it via the powershell script:
-
-```powershell
-iwr -useb https://github.com/artrixdotdev/browsermux/releases/latest/download/browsermux-installer.ps1 | iex
-```
+In the workings!
+<!-- Head over to the [latest release](https://github.com/artrixdotdev/browsermux/releases/latest) and download the Windows installer (`.msi`). -->
+<!---->
+<!-- Or, if you can install it via the powershell script: -->
+<!---->
+<!-- ```powershell -->
+<!-- iwr -useb "https://github.com/artrixdotdev/browsermux/releases/latest/download/browsermux-installer.ps1" | iex -->
+<!-- ``` -->
 
 
 
