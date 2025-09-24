@@ -10,7 +10,7 @@ cargo-dist-version = "0.30.0"
 # CI backends to support
 ci = "github"
 # The installers to generate for each app
-installers = ["shell", "powershell", "msi"]
+installers = ["shell", "msi"]
 # Target platforms to build apps for (Rust target-triple syntax)
 targets = [
    "aarch64-apple-darwin",
@@ -28,4 +28,4 @@ install-updater = false
 
 [[dist.extra-artifacts]]
 artifacts = ["target/release/schema.json", "target/release/PKGBUILD"]
-build = ["target/release/inject_hash.sh"]
+build = ["sh", "-c", "cargo build --release && target/release/inject_hash.sh"]
