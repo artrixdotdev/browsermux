@@ -37,25 +37,13 @@ jobs:
               tag: ${{ steps.latest.outputs.release }}
               fileName: "PKGBUILD"
 
-         # Prepare for AUR push
-         - name: Setup AUR SSH
-           run: |
-              mkdir -p ~/.ssh
-              echo "${{ secrets.AUR_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-              chmod 600 ~/.ssh/id_rsa
-              ssh-keyscan aur.archlinux.org >> ~/.ssh/known_hosts
-
-         # Clone your AUR repo and update files
-         - name: Push to AUR
-           run: |
-              git clone ssh://aur@aur.archlinux.org/browsermux.git aur-repo
-              cp PKGBUILD aur-repo/
-
-              pushd aur-repo
-              makepkg --printsrcinfo > .SRCINFO
-              git config user.name "GitHub Action"
-              git config user.email "actions@github.com"
-              git add PKGBUILD .SRCINFO
-              git commit -m "Update to ${{ steps.latest.outputs.release }}"
-              git push
-              popd
+         - name: Publish AUR package
+           uses: KSXGitHub/github-actions-deploy-aur@v4.1.1
+           with:
+              pkgname: browsermux
+              pkgbuild: ./PKGBUILD
+              commit_username: GitHub Action
+              commit_email: actions@github.com
+              ssh_private_key: ${{ secrets.AUR_SSH_PRIVATE_KEY }}
+              commit_message: Update AUR package to ${{ steps.latest.outputs.release }}
+              ssh_keyscan_types: rsa,ecdsa,ed25519
